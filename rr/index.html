@@ -1,16 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Report Writer • XARK</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Report Writer</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
-  background:#0a0a0a;
+  background:#080808;
   color:#eee;
   font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
@@ -19,26 +21,39 @@ header{
   height:58px;
   display:flex;
   align-items:center;
-  gap:20px;
-  padding:0 18px;
-  border-bottom:1px solid #222;
+  padding:0 16px;
+  border-bottom:1px solid #252525;
   position:sticky;
   top:0;
-  background:#0d0d0d;
-  z-index:5;
+  background:#0c0c0cee;
+  backdrop-filter:blur(18px);
+  z-index:10;
 }
 
-header a{color:#ddd;text-decoration:none}
-header span{margin-left:auto;color:#888;font-size:12px}
+header a{
+  color:#ddd;
+  text-decoration:none;
+  margin-right:18px;
+}
+
+header b{
+  font-size:15px;
+}
+
+header span{
+  margin-left:auto;
+  color:#777;
+  font-size:11px;
+}
 
 .layout{
   display:grid;
-  grid-template-columns:390px 1fr;
+  grid-template-columns:380px 1fr;
   min-height:calc(100vh - 58px);
 }
 
 aside{
-  padding:18px;
+  padding:16px;
   overflow:auto;
   max-height:calc(100vh - 58px);
   border-right:1px solid #222;
@@ -51,18 +66,22 @@ label{
   margin:12px 0;
 }
 
-input,textarea,select{
+input,
+textarea,
+select{
   width:100%;
   margin-top:6px;
-  background:#141414;
+  background:#151515;
   color:#eee;
   border:1px solid #333;
-  border-radius:9px;
+  border-radius:10px;
   padding:10px;
   font:inherit;
 }
 
-textarea{resize:vertical}
+textarea{
+  resize:vertical;
+}
 
 h2{
   font-size:14px;
@@ -82,7 +101,6 @@ h2{
 .format-note{
   color:#777;
   font-size:11px;
-  margin:6px 0 12px;
   line-height:1.4;
 }
 
@@ -90,7 +108,7 @@ button{
   width:100%;
   padding:12px;
   border:0;
-  border-radius:10px;
+  border-radius:11px;
   margin-top:14px;
   font-weight:700;
   cursor:pointer;
@@ -105,17 +123,24 @@ button.secondary{
 #preview{
   padding:25px;
   overflow:auto;
+  background:
+    radial-gradient(
+      circle at 80% 0,
+      #1a1a1a,
+      transparent 35%
+    );
 }
 
 .preview{
   width:210mm;
-  min-height:297mm;
+  height:297mm;
   background:#fff;
   color:#111;
   margin:0 auto 25px;
   padding:25mm 22mm 20mm 25mm;
   position:relative;
-  box-shadow:0 3px 18px #0003;
+  box-shadow:0 3px 22px #0005;
+  overflow:hidden;
 }
 
 .no{
@@ -124,8 +149,7 @@ button.secondary{
   top:12mm;
   color:#777;
   opacity:.72;
-  font:normal 11pt "Times New Roman",serif;
-  letter-spacing:.1px;
+  font:11pt "Times New Roman",serif;
 }
 
 .title{
@@ -137,9 +161,19 @@ button.secondary{
   font-weight:bold;
   max-width:150mm;
   margin:0 auto 18mm;
+  overflow-wrap:break-word;
 }
 
-.meta{
+.meta,
+.submitted,
+.section,
+.p,
+.ref{
+  font-family:"Times New Roman",serif;
+}
+
+.meta,
+.submitted{
   line-height:1.7;
 }
 
@@ -147,27 +181,34 @@ button.secondary{
   margin-top:18mm;
 }
 
-.meta,.submitted{
-  font-family:"Times New Roman",serif;
-}
-
 .section{
   font-weight:bold;
   margin:0 0 8pt;
-  font-family:"Times New Roman",serif;
+}
+
+.p,
+.ref{
+  display:block;
+  width:100%;
+  max-width:100%;
+  white-space:normal;
+  overflow-wrap:break-word;
+  word-break:normal;
 }
 
 .p{
-  font-family:"Times New Roman",serif;
   text-align:justify;
   text-indent:1.27cm;
-  margin:0;
+  margin:0 0 10pt;
+}
+
+.p.continuation{
+  text-indent:0;
 }
 
 .ref{
-  font-family:"Times New Roman",serif;
   text-align:left;
-  margin:0;
+  margin:0 0 8pt;
   text-indent:0;
 }
 
@@ -175,25 +216,59 @@ button.secondary{
   padding-top:30mm;
 }
 
+.content-page{
+  padding-top:25mm;
+}
+
 @media(max-width:850px){
-  .layout{grid-template-columns:1fr}
-  aside{max-height:none;border:0}
-  #preview{overflow:auto}
-  .preview{margin-left:0}
+
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  aside{
+    max-height:none;
+    border:0;
+  }
+
+  #preview{
+    overflow:auto;
+  }
+
+  .preview{
+    margin-left:0;
+  }
 }
 
 @media print{
-  body{background:#fff}
-  header,aside{display:none}
-  .layout{display:block}
-  #preview{padding:0}
+
+  body{
+    background:#fff;
+  }
+
+  header,
+  aside{
+    display:none;
+  }
+
+  .layout{
+    display:block;
+  }
+
+  #preview{
+    padding:0;
+    background:#fff;
+  }
+
   .preview{
     margin:0;
     box-shadow:none;
     page-break-after:always;
   }
-  .preview:last-child{page-break-after:auto}
-  .no{color:#777;opacity:.72}
+
+  .preview:last-child{
+    page-break-after:auto;
+  }
 }
 </style>
 </head>
@@ -201,9 +276,9 @@ button.secondary{
 <body>
 
 <header>
-  <a href="../">← XARK</a>
+  <a href="../../">← Back</a>
   <b>Report Writer</b>
-  <span>Free • Browser-only</span>
+  <span>Utility</span>
 </header>
 
 <div class="layout">
@@ -213,34 +288,54 @@ button.secondary{
 <h2>Report Details</h2>
 
 <label>
-  Report Title
-  <textarea id="title" rows="5" placeholder="Enter your report title..."></textarea>
+Report Title
+<textarea
+  id="title"
+  rows="5"
+  placeholder="Enter your report title..."
+></textarea>
 </label>
 
 <label>
-  Assessment Type
-  <input id="assessment" type="text" placeholder="e.g. SEC – Internal Assessment">
+Assessment Type
+<input
+  id="assessment"
+  placeholder="e.g. SEC – Internal Assessment"
+>
 </label>
 
 <label>
-  Department
-  <input id="department" type="text" placeholder="e.g. Department of English">
+Department
+<input
+  id="department"
+  placeholder="e.g. Department of English"
+>
 </label>
 
 <label>
-  University / Institution
-  <input id="university" type="text" placeholder="Enter university name...">
+University / Institution
+<input
+  id="university"
+  placeholder="Enter university name..."
+>
 </label>
 
 <label>
-  Student Name
-  <input id="student" type="text" placeholder="Enter your full name...">
+Student Name
+<input
+  id="student"
+  placeholder="Enter your full name..."
+>
 </label>
 
 <label>
-  Year / Semester
-  <input id="semester" type="text" placeholder="e.g. UG 2nd Year – 3rd Semester">
+Year / Semester
+<input
+  id="semester"
+  placeholder="e.g. UG 2nd Year – 3rd Semester"
+>
 </label>
+
 
 <h2>Heading Alignment</h2>
 
@@ -250,289 +345,640 @@ button.secondary{
   <option value="right">Right</option>
 </select>
 
+
 <h2>Text Formatting</h2>
 
 <div class="format-grid">
 
-  <label>
-    Font Size
-    <select id="fontSize">
-      <option value="10">10 pt</option>
-      <option value="11">11 pt</option>
-      <option value="12" selected>12 pt</option>
-      <option value="13">13 pt</option>
-      <option value="14">14 pt</option>
-      <option value="16">16 pt</option>
-      <option value="18">18 pt</option>
-    </select>
-  </label>
+<label>
+Font Size
 
-  <label>
-    Line Spacing
-    <select id="lineSpacing">
-      <option value="1">1.0 — Single</option>
-      <option value="1.15">1.15</option>
-      <option value="1.5">1.5</option>
-      <option value="2" selected>2.0 — Double</option>
-      <option value="2.2">2.2</option>
-      <option value="2.5">2.5</option>
-      <option value="3">3.0</option>
-    </select>
-  </label>
+<select id="fontSize">
+  <option>10</option>
+  <option>11</option>
+  <option selected>12</option>
+  <option>13</option>
+  <option>14</option>
+  <option>16</option>
+  <option>18</option>
+</select>
+
+</label>
+
+
+<label>
+Line Spacing
+
+<select id="lineSpacing">
+  <option>1</option>
+  <option>1.15</option>
+  <option>1.5</option>
+  <option selected>2</option>
+  <option>2.2</option>
+  <option>2.5</option>
+  <option>3</option>
+</select>
+
+</label>
 
 </div>
 
 <p class="format-note">
-  These settings apply to the report text and references and update the A4 preview instantly.
+Paragraphs are separated by blank lines.
+Each new paragraph gets a first-line indent,
+and long text automatically continues onto
+additional A4 pages.
 </p>
+
 
 <h2>Executive Summary</h2>
 
 <textarea
   id="summary"
   rows="14"
-  placeholder="Write your executive summary here...
-
-Separate paragraphs with one blank line."
+  placeholder="Write your executive summary here..."
 ></textarea>
+
 
 <h2>Report</h2>
 
 <textarea
   id="report"
   rows="20"
-  placeholder="Write your report here...
-
-Separate paragraphs with one blank line."
+  placeholder="Write your report here..."
 ></textarea>
+
 
 <h2>References</h2>
 
 <textarea
   id="refs"
   rows="12"
-  placeholder="Enter your references here...
-
-Example:
-
-1. Author, Name. Title. Publisher, Year.
-
-2. Author, Name. Title. Publisher, Year."
+  placeholder="Enter your references here..."
 ></textarea>
 
-<button type="button" onclick="window.print()">
+
+<button onclick="window.print()">
   Print / Save PDF
 </button>
 
-<button type="button" class="secondary" onclick="clearAll()">
+<button
+  class="secondary"
+  onclick="clearAll()"
+>
   Clear All
 </button>
 
 </aside>
 
+
 <main id="preview"></main>
 
 </div>
 
-<script>
-const $ = id => document.getElementById(id);
 
-function escapeHTML(value){
-  return String(value || "")
+<script>
+
+const $ = id =>
+  document.getElementById(id);
+
+
+/* Escape HTML */
+function esc(v){
+
+  return String(v || "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;");
+
 }
 
-function getLastName(){
-  const fullName = $("student").value.trim();
 
-  if(!fullName) return "";
+/* Get surname */
+function surname(){
 
-  const parts = fullName.split(/\s+/);
-  return parts[parts.length - 1];
+  const p =
+    $("student")
+      .value
+      .trim()
+      .split(/\s+/);
+
+  return p.length && p[0]
+    ? p[p.length - 1]
+    : "";
+
 }
 
-function pageLabel(number){
-  const surname = getLastName();
 
-  if(!surname) return String(number);
+/* Page label */
+function label(n){
 
-  return `${escapeHTML(surname)} ${number}`;
+  const s = surname();
+
+  return s
+    ? esc(s) + " " + n
+    : String(n);
+
 }
 
-function createParagraphs(text, reference=false, fontSize=12, lineSpacing=2){
+
+/*
+  Convert the textarea into
+  separate paragraphs.
+
+  A blank line means a new paragraph.
+*/
+function splitParagraphs(text){
+
   return String(text || "")
+    .replace(/\r/g,"")
     .split(/\n\s*\n/)
-    .map(p => p.trim())
-    .filter(Boolean)
-    .map(p => {
+    .map(x => x.trim())
+    .filter(Boolean);
 
-      const safe = escapeHTML(p).replace(/\n/g,"<br>");
-
-      return `
-        <p
-          class="${reference ? "ref" : "p"}"
-          style="font-size:${fontSize}pt;line-height:${lineSpacing};"
-        >${safe}</p>
-      `;
-
-    })
-    .join("");
 }
 
-function renderReport(){
 
-  const title = $("title").value;
-  const assessment = $("assessment").value;
-  const department = $("department").value;
-  const university = $("university").value;
-  const student = $("student").value;
-  const semester = $("semester").value;
-  const alignment = $("align").value;
+/* Create an A4 page */
+function makePage(
+  number,
+  extraClass=""
+){
 
-  const fontSize = parseFloat($("fontSize").value);
-  const lineSpacing = parseFloat($("lineSpacing").value);
+  const page =
+    document.createElement("section");
 
-  const summary = $("summary").value;
-  const report = $("report").value;
-  const references = $("refs").value;
+  page.className =
+    "preview " + extraClass;
 
-  const titlePage = `
-    <section class="preview title">
+  page.innerHTML =
+    '<div class="no">' +
+    label(number) +
+    '</div>';
 
-      <div class="no">
-        ${pageLabel(1)}
-      </div>
+  $("preview").appendChild(page);
 
-      <h1
-        style="
-          font-size:${fontSize}pt;
-          line-height:1.35;
-        "
-      >
-        ${escapeHTML(title)}
-      </h1>
+  return page;
 
-      <div
-        class="meta"
-        style="
-          font-size:${fontSize}pt;
-          line-height:1.7;
-        "
-      >
-        ${escapeHTML(assessment)}<br>
-        ${escapeHTML(department)}<br>
-        ${escapeHTML(university)}
-      </div>
-
-      <div
-        class="submitted"
-        style="
-          font-size:${fontSize}pt;
-          line-height:1.7;
-        "
-      >
-        Submitted by<br>
-        <b>${escapeHTML(student)}</b><br>
-        ${escapeHTML(semester)}
-      </div>
-
-    </section>
-  `;
-
-  const summaryPage = `
-    <section class="preview">
-
-      <div class="no">
-        ${pageLabel(2)}
-      </div>
-
-      <h2
-        class="section"
-        style="
-          text-align:${alignment};
-          font-size:${fontSize + 2}pt;
-          line-height:1.2;
-        "
-      >
-        Executive Summary
-      </h2>
-
-      ${createParagraphs(
-        summary,
-        false,
-        fontSize,
-        lineSpacing
-      )}
-
-    </section>
-  `;
-
-  const reportPage = `
-    <section class="preview">
-
-      <div class="no">
-        ${pageLabel(3)}
-      </div>
-
-      <h2
-        class="section"
-        style="
-          text-align:${alignment};
-          font-size:${fontSize + 2}pt;
-          line-height:1.2;
-        "
-      >
-        Report
-      </h2>
-
-      ${createParagraphs(
-        report,
-        false,
-        fontSize,
-        lineSpacing
-      )}
-
-    </section>
-  `;
-
-  const referencePage = `
-    <section class="preview refs">
-
-      <div class="no">
-        ${pageLabel(4)}
-      </div>
-
-      <h2
-        class="section"
-        style="
-          text-align:${alignment};
-          font-size:${fontSize + 2}pt;
-          line-height:1.2;
-        "
-      >
-        References
-      </h2>
-
-      ${createParagraphs(
-        references,
-        true,
-        fontSize,
-        lineSpacing
-      )}
-
-    </section>
-  `;
-
-  $("preview").innerHTML =
-    titlePage +
-    summaryPage +
-    reportPage +
-    referencePage;
 }
 
+
+/* Add section heading */
+function addHeading(
+  page,
+  title,
+  align,
+  fs
+){
+
+  const h =
+    document.createElement("h2");
+
+  h.className = "section";
+
+  h.style.textAlign = align;
+
+  h.style.fontSize =
+    (fs + 2) + "pt";
+
+  h.textContent = title;
+
+  page.appendChild(h);
+
+}
+
+
+/* Check whether content fits */
+function fits(page){
+
+  return page.scrollHeight <=
+    page.clientHeight + 1;
+
+}
+
+
+/*
+  Add paragraph text while keeping
+  everything inside the A4 page.
+
+  Long paragraphs automatically
+  continue onto another page.
+*/
+function addParagraphFlow(
+  text,
+  page,
+  ref,
+  fs,
+  ls,
+  nextPageNumber
+){
+
+  const words =
+    String(text)
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+
+  let currentPage = page;
+
+  let currentText = "";
+
+  let firstChunk = true;
+
+
+  for(const word of words){
+
+    const candidate =
+      currentText
+        ? currentText + " " + word
+        : word;
+
+
+    const p =
+      document.createElement("p");
+
+    p.className =
+      (ref ? "ref" : "p") +
+      (firstChunk
+        ? ""
+        : " continuation");
+
+
+    p.style.fontSize =
+      fs + "pt";
+
+    p.style.lineHeight =
+      ls;
+
+
+    p.textContent =
+      candidate;
+
+
+    currentPage.appendChild(p);
+
+
+    /*
+      If this text does not fit,
+      move it to the next page.
+    */
+    if(!fits(currentPage)){
+
+      currentPage.removeChild(p);
+
+
+      if(currentText){
+
+        const finalP =
+          document.createElement("p");
+
+        finalP.className =
+          (ref ? "ref" : "p") +
+          (firstChunk
+            ? ""
+            : " continuation");
+
+
+        finalP.style.fontSize =
+          fs + "pt";
+
+        finalP.style.lineHeight =
+          ls;
+
+
+        finalP.textContent =
+          currentText;
+
+
+        currentPage.appendChild(
+          finalP
+        );
+
+
+        currentPage =
+          makePage(
+            nextPageNumber.value++
+          );
+
+
+        currentText = "";
+
+        firstChunk = false;
+
+
+        const nextP =
+          document.createElement("p");
+
+        nextP.className =
+          (ref ? "ref" : "p") +
+          " continuation";
+
+
+        nextP.style.fontSize =
+          fs + "pt";
+
+        nextP.style.lineHeight =
+          ls;
+
+
+        nextP.textContent =
+          word;
+
+
+        currentPage.appendChild(
+          nextP
+        );
+
+
+        currentText = word;
+
+      }
+
+      else{
+
+        /*
+          Extremely long word.
+          Allow the browser to break it.
+        */
+
+        const longP =
+          document.createElement("p");
+
+        longP.className =
+          (ref ? "ref" : "p") +
+          (firstChunk
+            ? ""
+            : " continuation");
+
+
+        longP.style.fontSize =
+          fs + "pt";
+
+        longP.style.lineHeight =
+          ls;
+
+        longP.style.overflowWrap =
+          "anywhere";
+
+
+        longP.textContent =
+          word;
+
+
+        currentPage.appendChild(
+          longP
+        );
+
+
+        currentPage =
+          makePage(
+            nextPageNumber.value++
+          );
+
+
+        currentText = "";
+
+        firstChunk = false;
+
+      }
+
+    }
+
+    else{
+
+      currentPage.removeChild(p);
+
+      currentText = candidate;
+
+    }
+
+  }
+
+
+  /*
+    Add whatever text is left.
+  */
+  if(currentText){
+
+    const finalP =
+      document.createElement("p");
+
+    finalP.className =
+      (ref ? "ref" : "p") +
+      (firstChunk
+        ? ""
+        : " continuation");
+
+
+    finalP.style.fontSize =
+      fs + "pt";
+
+    finalP.style.lineHeight =
+      ls;
+
+
+    finalP.textContent =
+      currentText;
+
+
+    currentPage.appendChild(
+      finalP
+    );
+
+  }
+
+
+  return currentPage;
+
+}
+
+
+/* Render a complete section */
+function renderTextSection(
+  title,
+  text,
+  ref,
+  align,
+  fs,
+  ls,
+  pageNumber
+){
+
+  let page =
+    makePage(
+      pageNumber.value++,
+      "content-page"
+    );
+
+
+  addHeading(
+    page,
+    title,
+    align,
+    fs
+  );
+
+
+  for(
+    const paragraph
+    of splitParagraphs(text)
+  ){
+
+    page =
+      addParagraphFlow(
+        paragraph,
+        page,
+        ref,
+        fs,
+        ls,
+        pageNumber
+      );
+
+  }
+
+}
+
+
+/* Render title page */
+function renderTitle(
+  fs,
+  pageNumber
+){
+
+  const section =
+    makePage(
+      pageNumber.value++,
+      "title"
+    );
+
+
+  section.innerHTML +=
+
+    '<h1 style="font-size:' +
+    fs +
+    'pt;line-height:1.35">' +
+
+    esc(
+      $("title").value
+    ) +
+
+    '</h1>' +
+
+
+    '<div class="meta" style="font-size:' +
+    fs +
+    'pt">' +
+
+    esc(
+      $("assessment").value
+    ) +
+
+    '<br>' +
+
+    esc(
+      $("department").value
+    ) +
+
+    '<br>' +
+
+    esc(
+      $("university").value
+    ) +
+
+    '</div>' +
+
+
+    '<div class="submitted" style="font-size:' +
+    fs +
+    'pt">' +
+
+    'Submitted by<br><b>' +
+
+    esc(
+      $("student").value
+    ) +
+
+    '</b><br>' +
+
+    esc(
+      $("semester").value
+    ) +
+
+    '</div>';
+
+}
+
+
+/* Main render */
+function render(){
+
+  $("preview").innerHTML = "";
+
+
+  const fs =
+    parseFloat(
+      $("fontSize").value
+    );
+
+
+  const ls =
+    parseFloat(
+      $("lineSpacing").value
+    );
+
+
+  const align =
+    $("align").value;
+
+
+  const pageNumber = {
+    value:1
+  };
+
+
+  renderTitle(
+    fs,
+    pageNumber
+  );
+
+
+  renderTextSection(
+    "Executive Summary",
+    $("summary").value,
+    false,
+    align,
+    fs,
+    ls,
+    pageNumber
+  );
+
+
+  renderTextSection(
+    "Report",
+    $("report").value,
+    false,
+    align,
+    fs,
+    ls,
+    pageNumber
+  );
+
+
+  renderTextSection(
+    "References",
+    $("refs").value,
+    true,
+    align,
+    fs,
+    ls,
+    pageNumber
+  );
+
+}
+
+
+/* Clear everything */
 function clearAll(){
 
   [
@@ -545,17 +991,29 @@ function clearAll(){
     "summary",
     "report",
     "refs"
-  ].forEach(id => {
-    $(id).value = "";
-  });
+  ].forEach(
+    id => $(id).value = ""
+  );
 
-  $("align").value = "left";
-  $("fontSize").value = "12";
-  $("lineSpacing").value = "2";
 
-  renderReport();
+  $("align").value =
+    "left";
+
+
+  $("fontSize").value =
+    "12";
+
+
+  $("lineSpacing").value =
+    "2";
+
+
+  render();
+
 }
 
+
+/* Live preview */
 [
   "title",
   "assessment",
@@ -571,12 +1029,21 @@ function clearAll(){
   "refs"
 ].forEach(id => {
 
-  $(id).addEventListener("input",renderReport);
-  $(id).addEventListener("change",renderReport);
+  $(id).addEventListener(
+    "input",
+    render
+  );
+
+  $(id).addEventListener(
+    "change",
+    render
+  );
 
 });
 
-renderReport();
+
+render();
+
 </script>
 
 </body>

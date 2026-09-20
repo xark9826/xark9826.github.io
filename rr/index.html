@@ -1,63 +1,525 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Report Writer • XARK</title>
-<link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Report Writer • XARK</title>
+
+  <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
-<header><a href="../">← XARK</a><b>Report Writer</b><span>Free • Browser-only</span></header>
+
+<header>
+  <a href="../">← XARK</a>
+
+  <b>Report Writer</b>
+
+  <span>Free • Browser-only</span>
+</header>
+
 
 <div class="layout">
-<aside>
-<h2>Report details</h2>
 
-<label>Title
-<textarea id="title" rows="4">FORMULATING INSTITUTIONAL POLICIES FOR THE ETHICAL INTEGRATION AND REGULATION OF GENERATIVE AI TOOLS IN UNDERGRADUATE COURSEWORK</textarea>
-</label>
+  <!-- =========================
+       EDITOR
+  ========================== -->
 
-<label>Assessment<input id="assessment" value="SEC – Internal Assessment"></label>
-<label>Department<input id="department" value="Department of English"></label>
-<label>University<input id="university" value="Aliah University"></label>
-<label>Student<input id="student" value="Nur Islam"></label>
-<label>Year / Semester<input id="semester" value="UG 2nd Year – 3rd Semester"></label>
+  <aside>
 
-<h2>Heading alignment</h2>
-<select id="align">
-<option value="center">Center</option>
-<option value="left">Left</option>
-<option value="right">Right</option>
-</select>
+    <h2>Report Details</h2>
 
-<h2>Executive Summary</h2>
-<textarea id="summary" rows="10">Generative artificial intelligence has rapidly become part of academic life. Undergraduate students can use generative AI to brainstorm ideas, understand difficult concepts, improve language, organise information and receive feedback.
+    <label>
+      Report Title
 
-At the same time, undisclosed or inappropriate use raises concerns about academic integrity, authorship, accuracy, privacy and the development of independent learning skills.
+      <textarea
+        id="title"
+        rows="5"
+        placeholder="Enter your report title..."
+      ></textarea>
+    </label>
 
-This paper examines these concerns and proposes an institutional policy that permits responsible educational uses while establishing clear boundaries for assessed work.</textarea>
 
-<h2>Report</h2>
-<textarea id="report" rows="14">Generative artificial intelligence refers to systems capable of producing new content such as text, images, audio, video and computer code in response to user instructions. Its rapid development has changed how students search for information, prepare written work and approach academic problems.
+    <label>
+      Assessment Type
 
-The central institutional question is therefore not simply whether students should be allowed to use AI. It is how universities can establish conditions under which AI can support learning without replacing the intellectual work that an assessment is intended to measure.
+      <input
+        id="assessment"
+        type="text"
+        placeholder="e.g. SEC – Internal Assessment"
+      >
+    </label>
 
-Generative AI can support learning when it is used as an aid rather than as a substitute for academic engagement.</textarea>
 
-<h2>References</h2>
-<textarea id="refs" rows="9">1. Miao, Fengchun, and Wayne Holmes. Guidance for Generative AI in Education and Research. UNESCO, 2023.
+    <label>
+      Department
 
-2. U.S. Department of Education, Office of Educational Technology. Artificial Intelligence and the Future of Teaching and Learning: Insights and Recommendations. U.S. Department of Education, 2023.
+      <input
+        id="department"
+        type="text"
+        placeholder="e.g. Department of English"
+      >
+    </label>
 
-3. Lodge, Jason M., et al. Assessment Reform for the Age of Artificial Intelligence. TEQSA, 2023.</textarea>
 
-<button onclick="window.print()">Print / Save PDF</button>
-<button class="secondary" onclick="resetDraft()">Reset Draft</button>
-</aside>
+    <label>
+      University / Institution
 
-<main id="preview"></main>
+      <input
+        id="university"
+        type="text"
+        placeholder="Enter university name..."
+      >
+    </label>
+
+
+    <label>
+      Student Name
+
+      <input
+        id="student"
+        type="text"
+        placeholder="Enter your name..."
+      >
+    </label>
+
+
+    <label>
+      Year / Semester
+
+      <input
+        id="semester"
+        type="text"
+        placeholder="e.g. UG 2nd Year – 3rd Semester"
+      >
+    </label>
+
+
+    <h2>Heading Alignment</h2>
+
+    <select id="align">
+
+      <option value="left">
+        Left
+      </option>
+
+      <option value="center">
+        Center
+      </option>
+
+      <option value="right">
+        Right
+      </option>
+
+    </select>
+
+
+    <!-- =========================
+         EXECUTIVE SUMMARY
+    ========================== -->
+
+    <h2>Executive Summary</h2>
+
+    <textarea
+      id="summary"
+      rows="14"
+      placeholder="Write your executive summary here...
+
+Separate paragraphs with one blank line."
+    ></textarea>
+
+
+    <!-- =========================
+         REPORT
+    ========================== -->
+
+    <h2>Report</h2>
+
+    <textarea
+      id="report"
+      rows="20"
+      placeholder="Write your report here...
+
+Separate paragraphs with one blank line."
+    ></textarea>
+
+
+    <!-- =========================
+         REFERENCES
+    ========================== -->
+
+    <h2>References</h2>
+
+    <textarea
+      id="refs"
+      rows="12"
+      placeholder="Enter your references here...
+
+Example:
+
+1. Author, Name. Title. Publisher, Year.
+
+2. Author, Name. Title. Publisher, Year."
+    ></textarea>
+
+
+    <!-- =========================
+         ACTIONS
+    ========================== -->
+
+    <button
+      type="button"
+      onclick="window.print()"
+    >
+      Print / Save PDF
+    </button>
+
+
+    <button
+      type="button"
+      class="secondary"
+      onclick="clearAll()"
+    >
+      Clear All
+    </button>
+
+  </aside>
+
+
+  <!-- =========================
+       LIVE PREVIEW
+  ========================== -->
+
+  <main id="preview">
+
+  </main>
+
 </div>
 
-<script src="./app.js"></script>
+
+<script>
+
+/* =========================================
+   ELEMENT HELPER
+========================================= */
+
+const $ = id => document.getElementById(id);
+
+
+/* =========================================
+   HTML ESCAPE
+========================================= */
+
+function escapeHTML(value) {
+
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+}
+
+
+/* =========================================
+   CONVERT TEXT TO PARAGRAPHS
+========================================= */
+
+function createParagraphs(text, reference = false) {
+
+  return String(text || "")
+    .split(/\n\s*\n/)
+    .map(paragraph => paragraph.trim())
+    .filter(Boolean)
+    .map(paragraph => {
+
+      const safeText = escapeHTML(paragraph)
+        .replace(/\n/g, "<br>");
+
+      return `
+        <p class="${reference ? "ref" : "p"}">
+          ${safeText}
+        </p>
+      `;
+
+    })
+    .join("");
+
+}
+
+
+/* =========================================
+   RENDER REPORT
+========================================= */
+
+function renderReport() {
+
+  const title =
+    $("title").value;
+
+  const assessment =
+    $("assessment").value;
+
+  const department =
+    $("department").value;
+
+  const university =
+    $("university").value;
+
+  const student =
+    $("student").value;
+
+  const semester =
+    $("semester").value;
+
+  const alignment =
+    $("align").value;
+
+  const summary =
+    $("summary").value;
+
+  const report =
+    $("report").value;
+
+  const references =
+    $("refs").value;
+
+
+  /* =====================================
+     PAGE 1 — TITLE
+  ===================================== */
+
+  const titlePage = `
+
+    <section class="preview title">
+
+      <div class="no">
+        Islam 1
+      </div>
+
+      <h1>
+        ${escapeHTML(title)}
+      </h1>
+
+
+      <div class="meta">
+
+        ${escapeHTML(assessment)}
+
+        <br>
+
+        ${escapeHTML(department)}
+
+        <br>
+
+        ${escapeHTML(university)}
+
+      </div>
+
+
+      <div class="submitted">
+
+        Submitted by
+
+        <br>
+
+        <b>
+          ${escapeHTML(student)}
+        </b>
+
+        <br>
+
+        ${escapeHTML(semester)}
+
+      </div>
+
+    </section>
+
+  `;
+
+
+  /* =====================================
+     PAGE 2 — EXECUTIVE SUMMARY
+  ===================================== */
+
+  const summaryPage = `
+
+    <section class="preview">
+
+      <div class="no">
+        Islam 2
+      </div>
+
+
+      <h2
+        class="section"
+        style="text-align:${alignment}"
+      >
+        Executive Summary
+      </h2>
+
+
+      ${createParagraphs(summary)}
+
+    </section>
+
+  `;
+
+
+  /* =====================================
+     PAGE 3 — REPORT
+  ===================================== */
+
+  const reportPage = `
+
+    <section class="preview">
+
+      <div class="no">
+        Islam 3
+      </div>
+
+
+      <h2
+        class="section"
+        style="text-align:${alignment}"
+      >
+        Report
+      </h2>
+
+
+      ${createParagraphs(report)}
+
+    </section>
+
+  `;
+
+
+  /* =====================================
+     PAGE 4 — REFERENCES
+  ===================================== */
+
+  const referencePage = `
+
+    <section class="preview refs">
+
+      <div class="no">
+        Islam 4
+      </div>
+
+
+      <h2
+        class="section"
+        style="text-align:${alignment}"
+      >
+        References
+      </h2>
+
+
+      ${createParagraphs(references, true)}
+
+    </section>
+
+  `;
+
+
+  $("preview").innerHTML =
+
+    titlePage +
+    summaryPage +
+    reportPage +
+    referencePage;
+
+}
+
+
+/* =========================================
+   CLEAR EVERYTHING
+========================================= */
+
+function clearAll() {
+
+  const fields = [
+
+    "title",
+    "assessment",
+    "department",
+    "university",
+    "student",
+    "semester",
+    "summary",
+    "report",
+    "refs"
+
+  ];
+
+
+  fields.forEach(id => {
+
+    $(id).value = "";
+
+  });
+
+
+  $("align").value = "left";
+
+
+  renderReport();
+
+}
+
+
+/* =========================================
+   LIVE PREVIEW
+========================================= */
+
+const fields = [
+
+  "title",
+  "assessment",
+  "department",
+  "university",
+  "student",
+  "semester",
+  "align",
+  "summary",
+  "report",
+  "refs"
+
+];
+
+
+fields.forEach(id => {
+
+  $(id).addEventListener(
+    "input",
+    renderReport
+  );
+
+
+  $(id).addEventListener(
+    "change",
+    renderReport
+  );
+
+});
+
+
+/* =========================================
+   INITIAL LOAD
+========================================= */
+
+/*
+  IMPORTANT:
+  There is intentionally NO localStorage here.
+
+  Every time the page opens or refreshes,
+  all fields start completely empty.
+*/
+
+renderReport();
+
+</script>
+
 </body>
 </html>

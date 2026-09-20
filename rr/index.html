@@ -10,8 +10,9 @@
   box-sizing:border-box;
 }
 
-body{
+html,body{
   margin:0;
+  padding:0;
   background:#080808;
   color:#eee;
   font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -131,9 +132,15 @@ button.secondary{
     );
 }
 
+
+/* =========================
+   A4 PAGE
+   ========================= */
+
 .preview{
   width:210mm;
   height:297mm;
+  box-sizing:border-box;
   background:#fff;
   color:#111;
   margin:0 auto 25px;
@@ -143,6 +150,9 @@ button.secondary{
   overflow:hidden;
 }
 
+
+/* Page number */
+
 .no{
   position:absolute;
   right:18mm;
@@ -151,6 +161,9 @@ button.secondary{
   opacity:.72;
   font:11pt "Times New Roman",serif;
 }
+
+
+/* Title page */
 
 .title{
   text-align:center;
@@ -163,6 +176,9 @@ button.secondary{
   margin:0 auto 18mm;
   overflow-wrap:break-word;
 }
+
+
+/* Typography */
 
 .meta,
 .submitted,
@@ -186,6 +202,9 @@ button.secondary{
   margin:0 0 8pt;
 }
 
+
+/* Paragraph */
+
 .p,
 .ref{
   display:block;
@@ -202,9 +221,18 @@ button.secondary{
   margin:0 0 10pt;
 }
 
+
+/*
+  Continuation of a paragraph
+  does not receive another indent.
+*/
+
 .p.continuation{
   text-indent:0;
 }
+
+
+/* References */
 
 .ref{
   text-align:left;
@@ -212,13 +240,17 @@ button.secondary{
   text-indent:0;
 }
 
-.refs{
-  padding-top:30mm;
-}
+
+/* Content page */
 
 .content-page{
   padding-top:25mm;
 }
+
+
+/* =========================
+   MOBILE
+   ========================= */
 
 @media(max-width:850px){
 
@@ -238,160 +270,276 @@ button.secondary{
   .preview{
     margin-left:0;
   }
+
 }
+
+
+/* =========================
+   PRINT / PDF
+   ========================= */
 
 @media print{
 
+  @page{
+    size:A4 portrait;
+    margin:0;
+  }
+
+  html,
   body{
     background:#fff;
+    width:210mm;
+    margin:0;
+    padding:0;
   }
 
   header,
   aside{
-    display:none;
+    display:none !important;
   }
 
   .layout{
     display:block;
+    min-height:0;
   }
 
   #preview{
-    padding:0;
-    background:#fff;
+    padding:0 !important;
+    margin:0 !important;
+    background:#fff !important;
+    overflow:visible !important;
   }
 
   .preview{
-    margin:0;
+    width:210mm;
+    height:297mm;
+    margin:0 !important;
+    padding:25mm 22mm 20mm 25mm;
     box-shadow:none;
+    overflow:hidden;
+
     page-break-after:always;
+    break-after:page;
   }
 
   .preview:last-child{
     page-break-after:auto;
+    break-after:auto;
   }
+
 }
+
 </style>
 </head>
+
 
 <body>
 
 <header>
-  <a href="../../">← Back</a>
-  <b>Report Writer</b>
-  <span>Utility</span>
+
+  <a href="../../">
+    ← Back
+  </a>
+
+  <b>
+    Report Writer
+  </b>
+
+  <span>
+    Report
+  </span>
+
 </header>
+
 
 <div class="layout">
 
+
+<!-- =========================
+     EDITOR
+     ========================= -->
+
 <aside>
 
-<h2>Report Details</h2>
+<h2>
+  Report Details
+</h2>
+
 
 <label>
-Report Title
-<textarea
-  id="title"
-  rows="5"
-  placeholder="Enter your report title..."
-></textarea>
-</label>
 
-<label>
-Assessment Type
-<input
-  id="assessment"
-  placeholder="e.g. SEC – Internal Assessment"
->
-</label>
+  Report Title
 
-<label>
-Department
-<input
-  id="department"
-  placeholder="e.g. Department of English"
->
-</label>
+  <textarea
+    id="title"
+    rows="5"
+    placeholder="Enter your report title..."
+  ></textarea>
 
-<label>
-University / Institution
-<input
-  id="university"
-  placeholder="Enter university name..."
->
-</label>
-
-<label>
-Student Name
-<input
-  id="student"
-  placeholder="Enter your full name..."
->
-</label>
-
-<label>
-Year / Semester
-<input
-  id="semester"
-  placeholder="e.g. UG 2nd Year – 3rd Semester"
->
 </label>
 
 
-<h2>Heading Alignment</h2>
+<label>
+
+  Assessment Type
+
+  <input
+    id="assessment"
+    placeholder="e.g. SEC – Internal Assessment"
+  >
+
+</label>
+
+
+<label>
+
+  Department
+
+  <input
+    id="department"
+    placeholder="e.g. Department of English"
+  >
+
+</label>
+
+
+<label>
+
+  University / Institution
+
+  <input
+    id="university"
+    placeholder="Enter university name..."
+  >
+
+</label>
+
+
+<label>
+
+  Student Name
+
+  <input
+    id="student"
+    placeholder="Enter your full name..."
+  >
+
+</label>
+
+
+<label>
+
+  Year / Semester
+
+  <input
+    id="semester"
+    placeholder="e.g. UG 2nd Year – 3rd Semester"
+  >
+
+</label>
+
+
+<h2>
+  Heading Alignment
+</h2>
+
 
 <select id="align">
-  <option value="left">Left</option>
-  <option value="center">Center</option>
-  <option value="right">Right</option>
+
+  <option value="left">
+    Left
+  </option>
+
+  <option value="center">
+    Center
+  </option>
+
+  <option value="right">
+    Right
+  </option>
+
 </select>
 
 
-<h2>Text Formatting</h2>
+<h2>
+  Text Formatting
+</h2>
+
 
 <div class="format-grid">
 
-<label>
-Font Size
 
-<select id="fontSize">
-  <option>10</option>
-  <option>11</option>
-  <option selected>12</option>
-  <option>13</option>
-  <option>14</option>
-  <option>16</option>
-  <option>18</option>
-</select>
+<label>
+
+  Font Size
+
+  <select id="fontSize">
+
+    <option>10</option>
+
+    <option>11</option>
+
+    <option selected>
+      12
+    </option>
+
+    <option>13</option>
+
+    <option>14</option>
+
+    <option>16</option>
+
+    <option>18</option>
+
+  </select>
 
 </label>
 
 
 <label>
-Line Spacing
 
-<select id="lineSpacing">
-  <option>1</option>
-  <option>1.15</option>
-  <option>1.5</option>
-  <option selected>2</option>
-  <option>2.2</option>
-  <option>2.5</option>
-  <option>3</option>
-</select>
+  Line Spacing
+
+  <select id="lineSpacing">
+
+    <option>1</option>
+
+    <option>1.15</option>
+
+    <option>1.5</option>
+
+    <option selected>
+      2
+    </option>
+
+    <option>2.2</option>
+
+    <option>2.5</option>
+
+    <option>3</option>
+
+  </select>
 
 </label>
+
 
 </div>
 
+
 <p class="format-note">
-Paragraphs are separated by blank lines.
-Each new paragraph gets a first-line indent,
-and long text automatically continues onto
-additional A4 pages.
+
+  Paragraphs are separated by blank lines.
+  Each new paragraph gets a first-line indent.
+  Long paragraphs continue naturally onto
+  the next A4 page without repeating words.
+
 </p>
 
 
-<h2>Executive Summary</h2>
+<h2>
+  Executive Summary
+</h2>
+
 
 <textarea
   id="summary"
@@ -400,7 +548,10 @@ additional A4 pages.
 ></textarea>
 
 
-<h2>Report</h2>
+<h2>
+  Report
+</h2>
+
 
 <textarea
   id="report"
@@ -409,7 +560,10 @@ additional A4 pages.
 ></textarea>
 
 
-<h2>References</h2>
+<h2>
+  References
+</h2>
+
 
 <textarea
   id="refs"
@@ -419,31 +573,45 @@ additional A4 pages.
 
 
 <button onclick="window.print()">
+
   Print / Save PDF
+
 </button>
+
 
 <button
   class="secondary"
   onclick="clearAll()"
 >
+
   Clear All
+
 </button>
+
 
 </aside>
 
 
+<!-- =========================
+     PREVIEW
+     ========================= -->
+
 <main id="preview"></main>
+
 
 </div>
 
 
 <script>
 
-const $ = id =>
-  document.getElementById(id);
+const $ =
+  id => document.getElementById(id);
 
 
-/* Escape HTML */
+/* =========================
+   HTML ESCAPING
+   ========================= */
+
 function esc(v){
 
   return String(v || "")
@@ -455,7 +623,10 @@ function esc(v){
 }
 
 
-/* Get surname */
+/* =========================
+   SURNAME
+   ========================= */
+
 function surname(){
 
   const p =
@@ -471,10 +642,14 @@ function surname(){
 }
 
 
-/* Page label */
+/* =========================
+   PAGE LABEL
+   ========================= */
+
 function label(n){
 
-  const s = surname();
+  const s =
+    surname();
 
   return s
     ? esc(s) + " " + n
@@ -483,27 +658,30 @@ function label(n){
 }
 
 
-/*
-  Convert the textarea into
-  separate paragraphs.
+/* =========================
+   PARAGRAPH SPLITTING
+   ========================= */
 
-  A blank line means a new paragraph.
-*/
 function splitParagraphs(text){
 
   return String(text || "")
     .replace(/\r/g,"")
     .split(/\n\s*\n/)
-    .map(x => x.trim())
+    .map(
+      x => x.trim()
+    )
     .filter(Boolean);
 
 }
 
 
-/* Create an A4 page */
+/* =========================
+   CREATE A4 PAGE
+   ========================= */
+
 function makePage(
   number,
-  extraClass=""
+  extraClass = ""
 ){
 
   const page =
@@ -517,14 +695,18 @@ function makePage(
     label(number) +
     '</div>';
 
-  $("preview").appendChild(page);
+  $("preview")
+    .appendChild(page);
 
   return page;
 
 }
 
 
-/* Add section heading */
+/* =========================
+   SECTION HEADING
+   ========================= */
+
 function addHeading(
   page,
   title,
@@ -535,21 +717,27 @@ function addHeading(
   const h =
     document.createElement("h2");
 
-  h.className = "section";
+  h.className =
+    "section";
 
-  h.style.textAlign = align;
+  h.style.textAlign =
+    align;
 
   h.style.fontSize =
     (fs + 2) + "pt";
 
-  h.textContent = title;
+  h.textContent =
+    title;
 
   page.appendChild(h);
 
 }
 
 
-/* Check whether content fits */
+/* =========================
+   PAGE HEIGHT CHECK
+   ========================= */
+
 function fits(page){
 
   return page.scrollHeight <=
@@ -558,13 +746,24 @@ function fits(page){
 }
 
 
-/*
-  Add paragraph text while keeping
-  everything inside the A4 page.
+/* =========================
+   PARAGRAPH FLOW ENGINE
+   ========================= */
 
-  Long paragraphs automatically
-  continue onto another page.
-*/
+/*
+ * Flows one paragraph through
+ * multiple A4 pages.
+ *
+ * Important:
+ *
+ * The word which causes a page
+ * break is stored exactly once.
+ *
+ * This prevents the old bug where
+ * the final word appeared on both
+ * pages.
+ */
+
 function addParagraphFlow(
   text,
   page,
@@ -580,176 +779,174 @@ function addParagraphFlow(
       .split(/\s+/)
       .filter(Boolean);
 
-  let currentPage = page;
 
-  let currentText = "";
+  if(!words.length){
 
-  let firstChunk = true;
+    return page;
+
+  }
 
 
-  for(const word of words){
+  let currentPage =
+    page;
 
-    const candidate =
-      currentText
-        ? currentText + " " + word
-        : word;
+  let buffer =
+    "";
 
+  let firstChunk =
+    true;
+
+
+  function buildParagraph(
+    value,
+    continuation
+  ){
 
     const p =
       document.createElement("p");
 
+
     p.className =
       (ref ? "ref" : "p") +
-      (firstChunk
-        ? ""
-        : " continuation");
+      (
+        continuation
+          ? " continuation"
+          : ""
+      );
 
 
     p.style.fontSize =
       fs + "pt";
+
 
     p.style.lineHeight =
       ls;
 
 
     p.textContent =
-      candidate;
+      value;
 
 
-    currentPage.appendChild(p);
+    return p;
+
+  }
+
+
+  for(
+    const word of words
+  ){
+
+    const candidate =
+      buffer
+        ? buffer + " " + word
+        : word;
+
+
+    const test =
+      buildParagraph(
+        candidate,
+        !firstChunk
+      );
+
+
+    currentPage
+      .appendChild(test);
 
 
     /*
-      If this text does not fit,
-      move it to the next page.
+      If it fits, keep building.
     */
-    if(!fits(currentPage)){
 
-      currentPage.removeChild(p);
+    if(
+      fits(currentPage)
+    ){
 
+      currentPage
+        .removeChild(test);
 
-      if(currentText){
+      buffer =
+        candidate;
 
-        const finalP =
-          document.createElement("p");
+      continue;
 
-        finalP.className =
-          (ref ? "ref" : "p") +
-          (firstChunk
-            ? ""
-            : " continuation");
-
-
-        finalP.style.fontSize =
-          fs + "pt";
-
-        finalP.style.lineHeight =
-          ls;
+    }
 
 
-        finalP.textContent =
-          currentText;
+    /*
+      It does not fit.
+      Remove the test element.
+    */
+
+    currentPage
+      .removeChild(test);
 
 
-        currentPage.appendChild(
-          finalP
+    /*
+      We already have text
+      that fits on this page.
+    */
+
+    if(buffer){
+
+      currentPage.appendChild(
+        buildParagraph(
+          buffer,
+          !firstChunk
+        )
+      );
+
+
+      /*
+        Create the next A4 page.
+      */
+
+      currentPage =
+        makePage(
+          nextPageNumber.value++
         );
 
 
-        currentPage =
-          makePage(
-            nextPageNumber.value++
-          );
+      /*
+        This is now a continuation
+        of the same paragraph.
+      */
+
+      firstChunk =
+        false;
 
 
-        currentText = "";
+      /*
+        IMPORTANT:
+        The current word becomes
+        the first word on the new
+        page exactly once.
+      */
 
-        firstChunk = false;
-
-
-        const nextP =
-          document.createElement("p");
-
-        nextP.className =
-          (ref ? "ref" : "p") +
-          " continuation";
-
-
-        nextP.style.fontSize =
-          fs + "pt";
-
-        nextP.style.lineHeight =
-          ls;
-
-
-        nextP.textContent =
-          word;
-
-
-        currentPage.appendChild(
-          nextP
-        );
-
-
-        currentText = word;
-
-      }
-
-      else{
-
-        /*
-          Extremely long word.
-          Allow the browser to break it.
-        */
-
-        const longP =
-          document.createElement("p");
-
-        longP.className =
-          (ref ? "ref" : "p") +
-          (firstChunk
-            ? ""
-            : " continuation");
-
-
-        longP.style.fontSize =
-          fs + "pt";
-
-        longP.style.lineHeight =
-          ls;
-
-        longP.style.overflowWrap =
-          "anywhere";
-
-
-        longP.textContent =
-          word;
-
-
-        currentPage.appendChild(
-          longP
-        );
-
-
-        currentPage =
-          makePage(
-            nextPageNumber.value++
-          );
-
-
-        currentText = "";
-
-        firstChunk = false;
-
-      }
+      buffer =
+        word;
 
     }
 
     else{
 
-      currentPage.removeChild(p);
+      /*
+        No word fits on the current
+        page. Start a new page and
+        put the word there exactly once.
+      */
 
-      currentText = candidate;
+      currentPage =
+        makePage(
+          nextPageNumber.value++
+        );
+
+
+      firstChunk =
+        false;
+
+
+      buffer =
+        word;
 
     }
 
@@ -757,33 +954,16 @@ function addParagraphFlow(
 
 
   /*
-    Add whatever text is left.
+    Add the remaining text.
   */
-  if(currentText){
 
-    const finalP =
-      document.createElement("p");
-
-    finalP.className =
-      (ref ? "ref" : "p") +
-      (firstChunk
-        ? ""
-        : " continuation");
-
-
-    finalP.style.fontSize =
-      fs + "pt";
-
-    finalP.style.lineHeight =
-      ls;
-
-
-    finalP.textContent =
-      currentText;
-
+  if(buffer){
 
     currentPage.appendChild(
-      finalP
+      buildParagraph(
+        buffer,
+        !firstChunk
+      )
     );
 
   }
@@ -794,7 +974,10 @@ function addParagraphFlow(
 }
 
 
-/* Render a complete section */
+/* =========================
+   RENDER SECTION
+   ========================= */
+
 function renderTextSection(
   title,
   text,
@@ -804,6 +987,24 @@ function renderTextSection(
   ls,
   pageNumber
 ){
+
+  const paragraphs =
+    splitParagraphs(text);
+
+
+  /*
+    Do not create a completely
+    empty section page.
+  */
+
+  if(
+    !paragraphs.length
+  ){
+
+    return;
+
+  }
+
 
   let page =
     makePage(
@@ -822,7 +1023,7 @@ function renderTextSection(
 
   for(
     const paragraph
-    of splitParagraphs(text)
+    of paragraphs
   ){
 
     page =
@@ -840,7 +1041,10 @@ function renderTextSection(
 }
 
 
-/* Render title page */
+/* =========================
+   TITLE PAGE
+   ========================= */
+
 function renderTitle(
   fs,
   pageNumber
@@ -910,10 +1114,14 @@ function renderTitle(
 }
 
 
-/* Main render */
+/* =========================
+   MAIN RENDER
+   ========================= */
+
 function render(){
 
-  $("preview").innerHTML = "";
+  $("preview")
+    .innerHTML = "";
 
 
   const fs =
@@ -978,7 +1186,10 @@ function render(){
 }
 
 
-/* Clear everything */
+/* =========================
+   CLEAR
+   ========================= */
+
 function clearAll(){
 
   [
@@ -992,7 +1203,9 @@ function clearAll(){
     "report",
     "refs"
   ].forEach(
-    id => $(id).value = ""
+    id => {
+      $(id).value = "";
+    }
   );
 
 
@@ -1013,7 +1226,10 @@ function clearAll(){
 }
 
 
-/* Live preview */
+/* =========================
+   LIVE PREVIEW
+   ========================= */
+
 [
   "title",
   "assessment",
@@ -1027,19 +1243,21 @@ function clearAll(){
   "summary",
   "report",
   "refs"
-].forEach(id => {
+].forEach(
+  id => {
 
-  $(id).addEventListener(
-    "input",
-    render
-  );
+    $(id).addEventListener(
+      "input",
+      render
+    );
 
-  $(id).addEventListener(
-    "change",
-    render
-  );
+    $(id).addEventListener(
+      "change",
+      render
+    );
 
-});
+  }
+);
 
 
 render();

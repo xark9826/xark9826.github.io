@@ -1,0 +1,30 @@
+*{box-sizing:border-box}
+body{margin:0;background:#0a0a0a;color:#eee;font-family:system-ui,sans-serif}
+header{height:58px;display:flex;align-items:center;gap:20px;padding:0 18px;border-bottom:1px solid #222;position:sticky;top:0;background:#0d0d0d;z-index:5}
+header a{color:#ddd;text-decoration:none}header span{margin-left:auto;color:#888;font-size:12px}
+.layout{display:grid;grid-template-columns:390px 1fr;min-height:calc(100vh - 58px)}
+aside{padding:18px;overflow:auto;max-height:calc(100vh - 58px);border-right:1px solid #222}
+label{display:block;color:#aaa;font-size:12px;margin:12px 0}
+input,textarea,select{width:100%;margin-top:6px;background:#141414;color:#eee;border:1px solid #333;border-radius:9px;padding:10px;font:inherit}
+h2{font-size:14px;margin-top:20px}
+button{width:100%;padding:12px;border:0;border-radius:10px;margin-top:14px;font-weight:700}
+button.secondary{background:#191919;color:#ddd;border:1px solid #333}
+.preview{width:210mm;min-height:297mm;background:#fff;color:#111;margin:25px auto;padding:25mm 22mm 20mm 25mm;position:relative;box-shadow:0 3px 18px #0003}
+.no{position:absolute;right:18mm;top:12mm;font:12pt "Times New Roman"}
+.title{text-align:center;padding-top:45mm}
+.title h1{font:bold 16pt/1.35 "Times New Roman";max-width:150mm;margin:0 auto 18mm}
+.meta,.submitted{font:12pt/1.7 "Times New Roman"}
+.submitted{margin-top:18mm}
+.section{font:bold 14pt "Times New Roman";margin:0 0 8pt}
+.p{font:12pt/2 "Times New Roman";text-align:justify;text-indent:1.27cm;margin:0}
+.ref{font:12pt/2 "Times New Roman";margin:0;text-indent:0}
+.refs{padding-top:30mm}
+@media(max-width:850px){
+.layout{grid-template-columns:1fr}aside{max-height:none;border:0}
+.preview{margin-left:0}
+}
+@media print{
+body{background:#fff}header,aside{display:none}.layout{display:block}
+.preview{margin:0;box-shadow:none;page-break-after:always}
+.preview:last-child{page-break-after:auto}
+}

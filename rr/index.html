@@ -28,16 +28,8 @@ header{
   z-index:5;
 }
 
-header a{
-  color:#ddd;
-  text-decoration:none;
-}
-
-header span{
-  margin-left:auto;
-  color:#888;
-  font-size:12px;
-}
+header a{color:#ddd;text-decoration:none}
+header span{margin-left:auto;color:#888;font-size:12px}
 
 .layout{
   display:grid;
@@ -59,9 +51,7 @@ label{
   margin:12px 0;
 }
 
-input,
-textarea,
-select{
+input,textarea,select{
   width:100%;
   margin-top:6px;
   background:#141414;
@@ -72,13 +62,28 @@ select{
   font:inherit;
 }
 
-textarea{
-  resize:vertical;
-}
+textarea{resize:vertical}
 
 h2{
   font-size:14px;
   margin-top:20px;
+}
+
+.format-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.format-grid label{
+  margin:8px 0;
+}
+
+.format-note{
+  color:#777;
+  font-size:11px;
+  margin:6px 0 12px;
+  line-height:1.4;
 }
 
 button{
@@ -113,7 +118,6 @@ button.secondary{
   box-shadow:0 3px 18px #0003;
 }
 
-/* Faded surname + page number */
 .no{
   position:absolute;
   right:18mm;
@@ -124,47 +128,43 @@ button.secondary{
   letter-spacing:.1px;
 }
 
-/* Title page */
 .title{
   text-align:center;
   padding-top:45mm;
 }
 
 .title h1{
-  font:bold 16pt/1.35 "Times New Roman",serif;
+  font-weight:bold;
   max-width:150mm;
   margin:0 auto 18mm;
 }
 
-.meta,
-.submitted{
-  font:12pt/1.7 "Times New Roman",serif;
+.meta{
+  line-height:1.7;
 }
 
 .submitted{
   margin-top:18mm;
 }
 
-/* Section headings */
-.section{
-  font:bold 14pt "Times New Roman",serif;
-  margin:0 0 8pt;
+.meta,.submitted{
+  font-family:"Times New Roman",serif;
 }
 
-/*
-  Report line spacing:
-  2.2 = slightly more than double spacing.
-*/
+.section{
+  font-weight:bold;
+  margin:0 0 8pt;
+  font-family:"Times New Roman",serif;
+}
+
 .p{
-  font:12pt/2.2 "Times New Roman",serif;
+  font-family:"Times New Roman",serif;
   text-align:justify;
-  text-indent:1.27cm;
   margin:0;
 }
 
-/* References: same enhanced spacing, no first-line indent */
 .ref{
-  font:12pt/2.2 "Times New Roman",serif;
+  font-family:"Times New Roman",serif;
   text-align:left;
   margin:0;
   text-indent:0;
@@ -175,58 +175,24 @@ button.secondary{
 }
 
 @media(max-width:850px){
-
-  .layout{
-    grid-template-columns:1fr;
-  }
-
-  aside{
-    max-height:none;
-    border:0;
-  }
-
-  #preview{
-    overflow:auto;
-  }
-
-  .preview{
-    margin-left:0;
-  }
+  .layout{grid-template-columns:1fr}
+  aside{max-height:none;border:0}
+  #preview{overflow:auto}
+  .preview{margin-left:0}
 }
 
 @media print{
-
-  body{
-    background:#fff;
-  }
-
-  header,
-  aside{
-    display:none;
-  }
-
-  .layout{
-    display:block;
-  }
-
-  #preview{
-    padding:0;
-  }
-
+  body{background:#fff}
+  header,aside{display:none}
+  .layout{display:block}
+  #preview{padding:0}
   .preview{
     margin:0;
     box-shadow:none;
     page-break-after:always;
   }
-
-  .preview:last-child{
-    page-break-after:auto;
-  }
-
-  .no{
-    color:#777;
-    opacity:.72;
-  }
+  .preview:last-child{page-break-after:auto}
+  .no{color:#777;opacity:.72}
 }
 </style>
 </head>
@@ -282,6 +248,42 @@ button.secondary{
   <option value="center">Center</option>
   <option value="right">Right</option>
 </select>
+
+<h2>Text Formatting</h2>
+
+<div class="format-grid">
+
+  <label>
+    Font Size
+    <select id="fontSize">
+      <option value="10">10 pt</option>
+      <option value="11">11 pt</option>
+      <option value="12" selected>12 pt</option>
+      <option value="13">13 pt</option>
+      <option value="14">14 pt</option>
+      <option value="16">16 pt</option>
+      <option value="18">18 pt</option>
+    </select>
+  </label>
+
+  <label>
+    Line Spacing
+    <select id="lineSpacing">
+      <option value="1">1.0 — Single</option>
+      <option value="1.15">1.15</option>
+      <option value="1.5">1.5</option>
+      <option value="2" selected>2.0 — Double</option>
+      <option value="2.2">2.2</option>
+      <option value="2.5">2.5</option>
+      <option value="3">3.0</option>
+    </select>
+  </label>
+
+</div>
+
+<p class="format-note">
+  These settings apply to the report text and references and update the A4 preview instantly.
+</p>
 
 <h2>Executive Summary</h2>
 
@@ -345,9 +347,7 @@ function escapeHTML(value){
 function getLastName(){
   const fullName = $("student").value.trim();
 
-  if(!fullName){
-    return "";
-  }
+  if(!fullName) return "";
 
   const parts = fullName.split(/\s+/);
   return parts[parts.length - 1];
@@ -356,21 +356,27 @@ function getLastName(){
 function pageLabel(number){
   const surname = getLastName();
 
-  if(!surname){
-    return String(number);
-  }
+  if(!surname) return String(number);
 
   return `${escapeHTML(surname)} ${number}`;
 }
 
-function createParagraphs(text, reference=false){
+function createParagraphs(text, reference=false, fontSize=12, lineSpacing=2){
   return String(text || "")
     .split(/\n\s*\n/)
     .map(p => p.trim())
     .filter(Boolean)
     .map(p => {
+
       const safe = escapeHTML(p).replace(/\n/g,"<br>");
-      return `<p class="${reference ? "ref" : "p"}">${safe}</p>`;
+
+      return `
+        <p
+          class="${reference ? "ref" : "p"}"
+          style="font-size:${fontSize}pt;line-height:${lineSpacing};"
+        >${safe}</p>
+      `;
+
     })
     .join("");
 }
@@ -384,63 +390,138 @@ function renderReport(){
   const student = $("student").value;
   const semester = $("semester").value;
   const alignment = $("align").value;
+
+  const fontSize = parseFloat($("fontSize").value);
+  const lineSpacing = parseFloat($("lineSpacing").value);
+
   const summary = $("summary").value;
   const report = $("report").value;
   const references = $("refs").value;
 
   const titlePage = `
     <section class="preview title">
-      <div class="no">${pageLabel(1)}</div>
 
-      <h1>${escapeHTML(title)}</h1>
+      <div class="no">
+        ${pageLabel(1)}
+      </div>
 
-      <div class="meta">
+      <h1
+        style="
+          font-size:${fontSize}pt;
+          line-height:1.35;
+        "
+      >
+        ${escapeHTML(title)}
+      </h1>
+
+      <div
+        class="meta"
+        style="
+          font-size:${fontSize}pt;
+          line-height:1.7;
+        "
+      >
         ${escapeHTML(assessment)}<br>
         ${escapeHTML(department)}<br>
         ${escapeHTML(university)}
       </div>
 
-      <div class="submitted">
+      <div
+        class="submitted"
+        style="
+          font-size:${fontSize}pt;
+          line-height:1.7;
+        "
+      >
         Submitted by<br>
         <b>${escapeHTML(student)}</b><br>
         ${escapeHTML(semester)}
       </div>
+
     </section>
   `;
 
   const summaryPage = `
     <section class="preview">
-      <div class="no">${pageLabel(2)}</div>
 
-      <h2 class="section" style="text-align:${alignment}">
+      <div class="no">
+        ${pageLabel(2)}
+      </div>
+
+      <h2
+        class="section"
+        style="
+          text-align:${alignment};
+          font-size:${fontSize + 2}pt;
+          line-height:1.2;
+        "
+      >
         Executive Summary
       </h2>
 
-      ${createParagraphs(summary)}
+      ${createParagraphs(
+        summary,
+        false,
+        fontSize,
+        lineSpacing
+      )}
+
     </section>
   `;
 
   const reportPage = `
     <section class="preview">
-      <div class="no">${pageLabel(3)}</div>
 
-      <h2 class="section" style="text-align:${alignment}">
+      <div class="no">
+        ${pageLabel(3)}
+      </div>
+
+      <h2
+        class="section"
+        style="
+          text-align:${alignment};
+          font-size:${fontSize + 2}pt;
+          line-height:1.2;
+        "
+      >
         Report
       </h2>
 
-      ${createParagraphs(report)}
+      ${createParagraphs(
+        report,
+        false,
+        fontSize,
+        lineSpacing
+      )}
+
     </section>
   `;
 
   const referencePage = `
     <section class="preview refs">
-      <div class="no">${pageLabel(4)}</div>
 
-      <h2 class="section" style="text-align:${alignment}">
+      <div class="no">
+        ${pageLabel(4)}
+      </div>
+
+      <h2
+        class="section"
+        style="
+          text-align:${alignment};
+          font-size:${fontSize + 2}pt;
+          line-height:1.2;
+        "
+      >
         References
       </h2>
 
-      ${createParagraphs(references,true)}
+      ${createParagraphs(
+        references,
+        true,
+        fontSize,
+        lineSpacing
+      )}
+
     </section>
   `;
 
@@ -468,6 +549,8 @@ function clearAll(){
   });
 
   $("align").value = "left";
+  $("fontSize").value = "12";
+  $("lineSpacing").value = "2";
 
   renderReport();
 }
@@ -480,6 +563,8 @@ function clearAll(){
   "student",
   "semester",
   "align",
+  "fontSize",
+  "lineSpacing",
   "summary",
   "report",
   "refs"
